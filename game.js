@@ -4,7 +4,7 @@ var clientHeight = document.documentElement.clientHeight;
 var config = {
     width: 500,
     height: 250,
-    scene: [Scene1, Scene2, Scene3],
+    scene: [Scene1, Scene2, Scene3, Scene4],
     pixelArt: true, 
     physics: {
         default: "arcade",
