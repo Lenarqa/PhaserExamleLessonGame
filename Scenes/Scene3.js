@@ -33,7 +33,8 @@ class Scene3 extends Phaser.Scene{
 
         this.nextLvl = this.add.text(w * 0.8, h * 0.8, "Next", {font:"30px Arial", fill:"yellow"}).setInteractive();
         this.nextLvl.setVisible(false);
-        this.nextLvl.on('ENTER', this.nextLVL, this);
+        this.nextLvl.on('pointerdown', this.nextLVL, this);
+        
 
         this.physics.add.collider(this.bullets, this.boxs, function(bullet, box){
             box.destroy();
@@ -57,8 +58,7 @@ class Scene3 extends Phaser.Scene{
         }
 
         if(this.boxs.countActive(true) == 0){
-            this.nextLvl.setVisible(true);
-            //scene.input.keyboard.removeKey('pointerdown');
+           this.nextLvl.setVisible(true);
         }
     }
 
@@ -72,6 +72,6 @@ class Scene3 extends Phaser.Scene{
     }
 
     nextLVL(){
-        this.game.start('Level4');
+        this.scene.start('Level4');
     }
 }
