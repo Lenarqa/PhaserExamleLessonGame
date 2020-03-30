@@ -10,14 +10,17 @@ class Scene1 extends Phaser.Scene {
     }
 
     create(){
-
+        //fast change lvl.
+        this.scene.start('Level3');
         console.log(this.game.config.width);
         
         var score = this.add.text(150, 50, "Hello World", {font: '30px'});
         score.visible = false;
 
        this.button = this.add.sprite(200, 125,'ten').setInteractive();
-       this.button.setScale(4);
+       //this.button.setScale(4);
+       this.button.displayWidth = 40;
+       this.button.displayHeight = 40;
        this.button.on('pointerdown', function(){
                  //do things on click
                  if(score.visible == true){
