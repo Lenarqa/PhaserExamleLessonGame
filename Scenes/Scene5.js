@@ -14,7 +14,9 @@ class Scene5 extends Phaser.Scene{
 
         this.cameras.main.setBackgroundColor(0xbababa);
 
-        this.cost = 5;
+        this.cost = 10;
+        this.costText = this.add.text(w*0.73, h*0.3, `Cost: ${this.cost}`, {font: "20px Arial", fill: "Black"});
+        this.costText.visible = false;
 
         this.money = this.add.image(w * 0.45, h * 0.5, 'money').setInteractive();
         this.clickBonusImg = this.add.image(w * 0.8, h * 0.16, 'ClickBonus').setInteractive();
@@ -26,37 +28,33 @@ class Scene5 extends Phaser.Scene{
 
         this.money.on('pointerdown', this.clickEvent, this);
         this.clickBonusImg.on('pointerdown', this.addBonus, this);
+        
     }
 
     clickEvent(){
         this.score += this.clickBonus;
+        
+        if(this.score >= this.cost){
+            this.clickBonusImg.visible = true;
+            this.costText.visible = true;
+        }
+
         this.scoreText.setText(`Score: ${this.score}`);
         
-        switch (this.score){
-            case 10:
-                if(this.money.scale > 1.1){
-                    
-                }else{
-                    this.clickBonusImg.visible = true;
-                    break;
-                }
-            case 20:
-                this.clickBonusImg.visible = true;
-                break;
-            case 40:
-            case 80:
-        }
     }
     
     addBonus(){
-        this.cost *=2
         this.score -= this.cost;
         this.scoreText.setText(`Score: ${this.score}`);
         this.clickBonus *= 2;
         this.clickBonusImg.visible = false;
+        this.costText.visible = false;
         
         if(this.money.scale < 3){
             this.money.setScale(this.money.scale + 1);
         }
+        this.cost *= 3;
+        
+        this.costText.setText(`Cost:${this.cost}`);
     }
 }
