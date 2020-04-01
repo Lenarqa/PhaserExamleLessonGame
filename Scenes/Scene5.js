@@ -34,18 +34,29 @@ class Scene5 extends Phaser.Scene{
 
         this.activeWorker = false;
         this.workerCost = 10;
-        this.workerBonus = 1;
+        this.workerBonus = 0;
         this.firstWorker = this.add.text(w*0.73, h*0.5, `Slava`, {font: "20px Arial", fill: "Black"}).setInteractive();
         this.firstWorker.on('pointerdown', this.active, this);
         
     }
 
     active(){
-        this.time.addEvent({
-            delay: 1000,
-            callback: this.addWorker.bind(this),
-            loop: true
-        });
+        if(this.score > this.workerCost){
+            this.workerBonus += 1;
+            this.score -= this.workerCost;
+            this.workerCost *= 3;
+            this.activeWorker = true;
+        }else{
+            console.log('No money!');   
+        }
+        
+        if(this.workerBonus == 1){
+            this.time.addEvent({
+                delay: 1000,
+                callback: this.addWorker.bind(this),
+                loop: true
+            });
+        }
     }
 
     addWorker(){
@@ -58,12 +69,6 @@ class Scene5 extends Phaser.Scene{
             this.clickBonusImg.visible = true;
             this.costText.visible = true;
         }
-
-        //this.scoreText.setText(`Score: ${this.score}`);
-
-        // if(this.activeWorker){
-        //     this.active.bind(this);
-        // }
     }
     
     addBonus(){
