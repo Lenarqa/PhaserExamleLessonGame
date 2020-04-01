@@ -22,9 +22,9 @@ class Scene2 extends Phaser.Scene{
           cube.displayWidth = width;
           cube.scaleY = cube.scaleX;
           cube.on('pointerdown', function(){
-              nextLvl.visible = true;
-              nextLvl.z = 10;
-          })
+            nextLvl.visible = true;
+            nextLvl.z = 10;
+          }, this)
       }
 
       var btnX = this.game.config.width * 0.8;
