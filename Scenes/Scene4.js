@@ -19,7 +19,7 @@ class Scene4 extends Phaser.Scene{
     create(){
         var h = this.game.config.height;
         var w = this.game.config.width;
-        console.log(h,  w);
+        //console.log(h,  w);
 
         this.bg = this.add.image(0,0, 'bg');
         this.bg.setOrigin(0,0);
@@ -27,7 +27,7 @@ class Scene4 extends Phaser.Scene{
         this.player = this.physics.add.sprite(w * 0.05, h * 0.5, 'player');
         this.player.setCollideWorldBounds(true);//player cant run from map
 
-        this.book = this.add.image(w* 0.92, h * 0.5, 'book');
+        this.book = this.physics.add.sprite(w* 0.92, h * 0.5, 'book');
         this.bullets = this.physics.add.group({
             key: 'bullet',
             repeat: 4,
@@ -37,11 +37,14 @@ class Scene4 extends Phaser.Scene{
         Phaser.Actions.ScaleXY(this.bullets.getChildren(), -0.5, -0.5);
 
         this.physics.add.collider(this.player, this.bullets, this.gameOver.bind(this));
+
+        this.physics.add.collider(this.player, this.book, this.nextLvl.bind(this));
        
         Phaser.Actions.Call(this.bullets.getChildren(), function(bullet){
             bullet.speed = Phaser.Math.Between(1, 3);
         }, this);
         //this.input.on('pointerdown', this.playerRun.bind(this));
+        this.helpText = this.add.text(w * 0.1, h * 0.14, "Click LMB to run! Take book!", {font:"30px Arial", fill:"yellow"});
     }
 
     update(){
@@ -61,6 +64,7 @@ class Scene4 extends Phaser.Scene{
         }
         
         if(this.input.activePointer.isDown){
+            this.helpText.setVisible(false);
             this.player.x += 4;
         }
 
@@ -69,6 +73,10 @@ class Scene4 extends Phaser.Scene{
 
     gameOver(){
         this.scene.restart();
+    }
+
+    nextLvl(){
+        this.scene.start('Level5');
     }
 }
 

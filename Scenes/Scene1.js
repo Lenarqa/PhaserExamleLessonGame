@@ -11,7 +11,7 @@ class Scene1 extends Phaser.Scene {
 
     create(){
         //fast change lvl.
-        this.scene.start('Level4');
+        //this.scene.start('Level4');
         console.log(this.game.config.width);
         
         var score = this.add.text(150, 50, "Hello World", {font: '30px'});
