@@ -15,6 +15,8 @@ class Scene5 extends Phaser.Scene{
 
         this.cameras.main.setBackgroundColor(0xbababa);
 
+        this.aim = this.add.text(w * 0.2, h * 0.2, "Collect 500 coins!", {font:"30px Arial", fill:"yellow"}).setInteractive();
+
         this.cost = 10;
         this.costText = this.add.text(w*0.73, h*0.3, `Cost: ${this.cost}`, {font: "20px Arial", fill: "Black"});
         this.costText.visible = false;
@@ -28,6 +30,7 @@ class Scene5 extends Phaser.Scene{
         this.scoreText = this.add.text(w * 0.30, h * 0.05, `Score: ${this.score}`, {font: "30px Arial", fill: "Black"});
 
         this.money.on('pointerdown', function(){
+            this.aim.visible = false;
             this.score += this.clickBonus;
             this.scoreText.setText(`Score: ${this.score}`);
         }, this);
@@ -41,6 +44,11 @@ class Scene5 extends Phaser.Scene{
         this.firstWCostText = this.add.text(w*0.73, h*0.65, `Cost: ${this.workerCost}`, {font: "20px Arial", fill: "Black"});
         
         this.firstWorker.on('pointerdown', this.active, this);
+
+        this.nextLvl = this.add.text(w * 0.8, h * 0.8, "Next", {font:"30px Arial", fill:"yellow"}).setInteractive();
+        this.nextLvl.visible = false;
+      
+        this.nextLvl.on('pointerdown', this.nextLVL, this);
         
     }
 
@@ -74,6 +82,10 @@ class Scene5 extends Phaser.Scene{
             this.clickBonusImg.visible = true;
             this.costText.visible = true;
         }
+
+        if(this.score >= 10){
+            this.nextLvl.visible = true;
+        }
     }
     
     addBonus(){
@@ -89,5 +101,9 @@ class Scene5 extends Phaser.Scene{
         this.cost *= 3;
         
         this.costText.setText(`Cost:${this.cost}`);
+    }
+
+    nextLVL(){
+        this.scene.start('Level6');
     }
 }
