@@ -6,6 +6,7 @@ class Scene5 extends Phaser.Scene{
     preload(){
        this.load.image("money", "assets/img/money.png");
        this.load.image("ClickBonus", "assets/img/clickBonus.png");
+       this.load.image('worker', 'assets/img/worker.png');
     }
 
     create(){
@@ -35,17 +36,21 @@ class Scene5 extends Phaser.Scene{
         this.activeWorker = false;
         this.workerCost = 10;
         this.workerBonus = 0;
-        this.firstWorker = this.add.text(w*0.73, h*0.5, `Slava`, {font: "20px Arial", fill: "Black"}).setInteractive();
+        //this.firstWorker = this.add.text(w*0.73, h*0.5, `Slava`, {font: "20px Arial", fill: "Black"}).setInteractive();
+        this.firstWorker = this.add.image(w*0.80, h*0.55, "worker").setInteractive();
+        this.firstWCostText = this.add.text(w*0.73, h*0.65, `Cost: ${this.workerCost}`, {font: "20px Arial", fill: "Black"});
+        
         this.firstWorker.on('pointerdown', this.active, this);
         
     }
 
     active(){
-        if(this.score > this.workerCost){
+        if(this.score >= this.workerCost){
             this.workerBonus += 1;
             this.score -= this.workerCost;
             this.workerCost *= 3;
             this.activeWorker = true;
+            this.firstWCostText.setText(`Cost: ${this.workerCost}`);
         }else{
             console.log('No money!');   
         }
