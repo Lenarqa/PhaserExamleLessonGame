@@ -56,7 +56,7 @@ class Scene5 extends Phaser.Scene{
            this.textNoMoney.visible = false; 
         }, this);
 
-        this.textNoMoney = this.add.text(w * 0.2, h * 0.2, "You need more money!", {font:"30px Arial", fill:"yellow"});
+        this.textNoMoney = this.add.text(w * 0.15, h * 0.8, "You need more money!", {font:"30px Arial", fill:"yellow"});
         this.textNoMoney.visible = false;
 
         this.nextLvl = this.add.text(w * 0.8, h * 0.8, "Next", {font:"30px Arial", fill:"yellow"}).setInteractive();
