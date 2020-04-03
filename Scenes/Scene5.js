@@ -30,11 +30,18 @@ class Scene5 extends Phaser.Scene{
         this.scoreText = this.add.text(w * 0.30, h * 0.05, `Score: ${this.score}`, {font: "30px Arial", fill: "Black"});
 
         this.money.on('pointerdown', function(){
+            this.money.setTint(0x808080);
             this.aim.visible = false;
             this.score += this.clickBonus;
             this.scoreText.setText(`Score: ${this.score}`);
         }, this);
+
+        this.money.on('pointerup', function(pointer){
+            this.money.clearTint();
+        }, this);
+
         this.clickBonusImg.on('pointerdown', this.addBonus, this);
+        
 
         this.activeWorker = false;
         this.workerCost = 10;
@@ -44,6 +51,13 @@ class Scene5 extends Phaser.Scene{
         this.firstWCostText = this.add.text(w*0.73, h*0.65, `Cost: ${this.workerCost}`, {font: "20px Arial", fill: "Black"});
         
         this.firstWorker.on('pointerdown', this.active, this);
+        this.firstWorker.on('pointerup', function(){
+           this.firstWorker.clearTint();
+           this.textNoMoney.visible = false; 
+        }, this);
+
+        this.textNoMoney = this.add.text(w * 0.2, h * 0.2, "You need more money!", {font:"30px Arial", fill:"yellow"});
+        this.textNoMoney.visible = false;
 
         this.nextLvl = this.add.text(w * 0.8, h * 0.8, "Next", {font:"30px Arial", fill:"yellow"}).setInteractive();
         this.nextLvl.visible = false;
@@ -53,6 +67,7 @@ class Scene5 extends Phaser.Scene{
     }
 
     active(){
+        this.firstWorker.setTint(0x808080);
         if(this.score >= this.workerCost){
             this.workerBonus += 1;
             this.score -= this.workerCost;
@@ -60,7 +75,7 @@ class Scene5 extends Phaser.Scene{
             this.activeWorker = true;
             this.firstWCostText.setText(`Cost: ${this.workerCost}`);
         }else{
-            console.log('No money!');   
+            this.textNoMoney.visible = true;   
         }
         
         if(this.workerBonus == 1){
@@ -83,7 +98,7 @@ class Scene5 extends Phaser.Scene{
             this.costText.visible = true;
         }
 
-        if(this.score >= 10){
+        if(this.score >= 500){
             this.nextLvl.visible = true;
         }
     }

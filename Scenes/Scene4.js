@@ -72,7 +72,15 @@ class Scene4 extends Phaser.Scene{
     }
 
     gameOver(){
-        this.scene.restart();
+        this.cameras.main.shake(500);
+
+        this.time.delayedCall(250, function(){
+            this.cameras.main.fade(250);
+        }, [], this);
+
+        this.time.delayedCall(500, function(){
+            this.scene.restart();
+        }, [], this)
     }
 
     nextLvl(){
